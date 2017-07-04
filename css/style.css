@@ -132,3 +132,15 @@ ul {
   text-align: center;
   padding-top: 80px;
 }
+
+.restart {
+  position: absolute;
+  box-sizing: border-box;
+  height: 50px;
+  width: 75px;
+  border: 1px solid #000;
+  text-align: center;
+  padding-top: 15px;
+  margin-left: 35em;
+  margin-top: 22em;
+}
