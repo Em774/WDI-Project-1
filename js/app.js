@@ -43,8 +43,8 @@ function init() {
   const $result       = $('.result');
   const $restart      = $('.restart');
   let counter         = 2;
-  let attackCounter   = 0;
-  let refresh         = 0;
+  let refresh         = 4;
+  let healRefresh     = 4;
 
   //animation
   let step            = 0;
@@ -114,8 +114,8 @@ function init() {
     hBar2.show();
     bar.show();
     bar2.show();
-    idleBoss();
-    idleNinjaa();
+    // idleBoss();
+    // idleNinjaa();
     countDown();
   }
 
@@ -142,7 +142,6 @@ function init() {
     }
   }
 
-
   function idleBoss() {
     idleZombie = setInterval(function() {
       $displayBoss.css('background-position', step * 430);
@@ -164,45 +163,54 @@ function init() {
       var damage = 10;
       damageHealthBar(damage, hBar2, bar2);
       checkBossAttack();
-      attackCounter ++;
       checkTurns();
     });
 
     //secondAttack
-    $attack2.on('click', reUse);
+    $attack2.one('click', reUse);
 
     function reUse(){
       var damage = 50;
       damageHealthBar(damage, hBar2, bar2);
       checkBossAttack();
-      attackCounter ++;
-      $attack2.off();
+      $attack2.addClass('disabled');
       checkTurns();
     }
 
     function checkTurns() {
-      if ($attack2.off()) {
-        $attack2.css('background', 'red');
-        refresh ++;
-        console.log(refresh);
+      console.log('checkTurns');
+      if ($attack2.hasClass('disabled')) {
+        console.log('second button is disabled');
+        refresh --;
       }
-      if (refresh === 4){
-        $attack2.on('click', reUse);
-        $attack2.css('background', 'green');
-        refresh = 0;
+      if (refresh === 0){
+        $attack2.removeClass('disabled');
+        $attack2.one('click', reUse);
+        refresh = 4;
       }
-
+      if ($potion.hasClass('disabled')) {
+        healRefresh --;
+        console.log(healRefresh);
+      }
+      if (healRefresh === 0) {
+        $potion.removeClass('disabled');
+        $potion.one('click', potion);
+        healRefresh = 4;
+      }
     }
 
     //heal
-    $potion.on('click', function(){
+    $potion.one('click', potion);
+
+    function potion() {
       hBar.data('value', hBar.data('total'));
       bar.css('width', '100%');
       $span1.html(hBar.data('value') + ' / 100');
       checkBossAttack();
-      attackCounter ++;
+      $potion.addClass('disabled');
       checkTurns();
-    });
+    }
+
   }
 
   function checkBossAttack() {
@@ -221,18 +229,15 @@ function init() {
         },
         {
           damage: '30',
-          heal: '10',
-          refresh: '2'
+          heal: '10'
         },
         {
           damage: '50',
-          heal: '5',
-          refresh: '3'
+          heal: '5'
         },
         {
           damage: '70',
-          heal: '10',
-          refresh: '5'
+          heal: '10'
         }
       ];
       var dam = bossDamage[Math.floor(Math.random() * bossDamage.length)].damage;

@@ -86,6 +86,7 @@ ul {
   height: 62px;
   width: 62px;
   border: 1px solid #090;
+  background: green;
   margin-left: 1em;
   list-style-type: none;
   overflow: hidden;
@@ -97,15 +98,19 @@ ul {
 .span1 {
   position: absolute;
   color: #000;
-  margin: 3.8em;
-  margin-left: 5em;
+  margin-top: 61px;
+  margin-left: 84px;;
+  width: 61px;
+  text-align: left;
 }
 
 .span2 {
   position: absolute;
   color: #000;
-  margin-top: 3.8em;
-  margin-left: 65.5em;
+  margin-top: 61px;
+  margin-left: 1048px;
+  widht: 61px;
+  text-align: right;
 }
 
 
@@ -175,4 +180,8 @@ ul {
   margin-left: 35em;
   margin-top: 22em;
   cursor: pointer;
+}
+
+.disabled {
+  background: red;
 }
