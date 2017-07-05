@@ -14,6 +14,7 @@
   text-align: center;
   padding-top: 30px;
   color: #fff;
+  cursor: pointer;
 }
 
 .character {
@@ -25,6 +26,7 @@
   border: 1px solid #000;
   text-align: center;
   padding-top: 80px;
+  cursor: pointer;
 }
 
 #character2 {
@@ -42,7 +44,7 @@
 #displayChar2 {
   position: absolute;
   top: 8em;
-  background-image: url(../images/ninja-idle.png);
+  background-image: url(../images/ninja-idle2.png);
   width: 232px;
   height: 439px;
   margin-left: 5em;
@@ -51,12 +53,27 @@
 #displayBoss {
   position: absolute;
   top: 4em;
-  background-image: url(../images/zombie-idle.png);
-  width: 355px;
-  height: 507px;
-  margin-left: 55em;
+  background-image: url(../images/zombie-idle2.png);
+  width: 430px;
+  height: 519px;
+  margin-left: 50em;
   transform: scaleX(-1);
 }
+
+.countDown {
+  box-sizing: border-box;
+  width: 400px;
+  height: 200px;
+  /*border: 1px solid #000;*/
+  position: absolute;
+  margin-top: 3em;
+  margin-left: 7em;
+  text-align: center;
+  padding-top: 80px;
+  font-size: 60px;
+}
+
+
 
 ul {
   position: absolute;
@@ -75,6 +92,20 @@ ul {
   text-align: center;
   padding-top: 22px;
   cursor: pointer;
+}
+
+.span1 {
+  position: absolute;
+  color: #000;
+  margin: 3.8em;
+  margin-left: 5em;
+}
+
+.span2 {
+  position: absolute;
+  color: #000;
+  margin-top: 3.8em;
+  margin-left: 65.5em;
 }
 
 
@@ -143,4 +174,5 @@ ul {
   padding-top: 15px;
   margin-left: 35em;
   margin-top: 22em;
+  cursor: pointer;
 }
