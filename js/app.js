@@ -29,6 +29,7 @@ function init() {
   const $displayChar1 = $('#displayChar1');
   const $displayChar2 = $('#displayChar2');
   const $displayBoss  = $('#displayBoss');
+  const $projectile   = $('.projectile');
   const $countDown    = $('.countDown');
   const $action       = $('.action');
   const $attack1      = $('#attack1');
@@ -48,14 +49,27 @@ function init() {
 
   //animation
   let step            = 0;
-  // let x               = 0;
-  let idleZombie;
-  let idleNinja;
+  let x               = 0;
+  let idleMonster;
+  let walkMonster;
+  let attackMonster;
+  let backMonster;
+  // let idleNinja;
+  let iceMageIdle;
+  let mageHurt;
+  let mageShoot;
+  let shootProjectile;
+  let mageDead;
+  let move            = 0;
+  let move2           = 0;
+  let move3           = 0;
+
 
   $character.hide();
   $displayChar1.hide();
   $displayChar2.hide();
   $displayBoss.hide();
+  $projectile.hide();
   $countDown.hide();
   $action.hide();
   $span1.hide();
@@ -68,7 +82,29 @@ function init() {
   $restart.hide();
 
 
-  $startButton.on('click', function() {
+  $attack1.on('mouseover', function(){
+    $attack1.html('-10');
+  });
+  $attack1.on('mouseout', function() {
+    $attack1.html('Shoot');
+  });
+
+  $attack2.on('mouseover', function(){
+    $attack2.html('-50');
+  });
+  $attack2.on('mouseout', function() {
+    $attack2.html('Spell');
+  });
+
+  $potion.on('mouseover', function(){
+    $potion.html('+100%');
+  });
+  $potion.on('mouseout', function() {
+    $potion.html('Potion');
+  });
+
+
+  $startButton.one('click', function() {
     $startButton.fadeOut();
     startGame();
   });
@@ -114,8 +150,8 @@ function init() {
     hBar2.show();
     bar.show();
     bar2.show();
-    // idleBoss();
-    // idleNinjaa();
+    idleBoss();
+    iceMageIdlee();
     countDown();
   }
 
@@ -143,17 +179,148 @@ function init() {
   }
 
   function idleBoss() {
-    idleZombie = setInterval(function() {
-      $displayBoss.css('background-position', step * 430);
-      step = (step + 1) % 15;
+    idleMonster = setInterval(function() {
+      $displayBoss.css('background-image', 'url(images/iceMonster-idle.png)');
+      $displayBoss.css('background-position', step * 678);
+      step = (step + 1) % 6;
+    }, 500);
+  }
+
+  function walkBoss() {
+    clearInterval(idleMonster);
+    move3 = 0;
+
+    walkMonster = setInterval(function() {
+      move3 ++;
+      $displayBoss.css('background-image', 'url(images/iceMonster-walk.png)');
+      $displayBoss.css('left', x);
+      $displayBoss.css('background-position', step * 678);
+      step = (step + 1) % 9;
+      x = (x - 40) % 700;
+
+      if (move3 === 17){
+        clearInterval(walkMonster);
+        attackBoss();
+      }
+    }, 100);
+  }
+
+  function attackBoss() {
+    move3 = 0;
+
+    attackMonster = setInterval(function() {
+      move3 ++;
+      $displayBoss.css('background-image', 'url(images/iceMonster-attack.png)');
+      $displayBoss.css('left', x);
+      $displayBoss.css('background-position', step * 678);
+      step = (step + 1) % 7;
+      iceMageHurt();
+
+      if (move3 === 7){
+        clearInterval(attackMonster);
+        backBoss();
+      }
+    }, 200);
+  }
+
+  function backBoss() {
+    move3 = 0;
+    x = -700;
+    backMonster = setInterval(function() {
+
+      move3 ++;
+      $displayBoss.css('background-image', 'url(images/iceMonster-walk.png)');
+      $displayBoss.css('left', x);
+      $displayBoss.css('background-position', step * 678);
+      step = (step + 1) % 9;
+      x = (x + 40) % 700;
+
+      if (move3 === 18){
+        clearInterval(backMonster);
+        idleBoss();
+      }
+    }, 100);
+  }
+
+
+
+  function iceMageIdlee() {
+    iceMageIdle = setInterval(function() {
+      $displayChar2.css('background-image', 'url(images/iceMageIdle.png)');
+      $displayChar2.css('background-position', step * 300);
+      step = (step + 1) % 6;
     }, 250);
   }
 
-  function idleNinjaa() {
-    idleNinja = setInterval(function() {
-      $displayChar2.css('background-position', step * 232);
-      step = (step + 1) % 10;
-    }, 180);
+  function iceMageHurt() {
+    clearInterval(iceMageIdle);
+    move = 0;
+
+    mageHurt = setInterval(function() {
+      move ++;
+      $displayChar2.css('background-image', 'url(images/iceMageHurt.png)');
+      $displayChar2.css('background-position', step * 300);
+      step = (step + 1) % 3;
+
+      if (move === 1){
+        clearInterval(mageHurt);
+        iceMageIdlee();
+      }
+    }, 100);
+  }
+
+  function iceMageShoot() {
+    clearInterval(iceMageIdle);
+    move = 0;
+
+    mageShoot = setInterval(function() {
+      move ++;
+      $displayChar2.css('background-image', 'url(images/iceMageShoot.png)');
+      $displayChar2.css('background-position', step * 300);
+      step = (step + 1) % 4;
+
+      if(move === 1){
+        clearInterval(mageShoot);
+        projectile();
+      }
+    }, 200);
+  }
+
+  function projectile() {
+    clearInterval(iceMageIdle);
+    $projectile.show();
+    x = 0;
+    move2 = 0;
+    shootProjectile = setInterval(function() {
+      move2 ++;
+      $projectile.css('left', x);
+      $projectile.css('background-position', step * 152);
+      step = (step + 1) % 3;
+      x = (x + 40) % 700;
+
+      if(move2 === 19) {
+        clearInterval(shootProjectile);
+        $projectile.hide();
+        iceMageIdlee();
+      }
+    }, 50);
+  }
+
+  function iceMageDead() {
+    clearInterval(iceMageIdle);
+    clearInterval(mageHurt);
+    move = 0;
+
+    mageDead = setInterval(function() {
+      move ++;
+      $displayChar2.css('background-image', 'url(images/iceMageDead.png)');
+      $displayChar2.css('background-position', step * 300);
+      step = (step + 1) % 5;
+
+      if(move === 1){
+        clearInterval(mageDead);
+      }
+    }, 1000);
   }
 
   function actionButton() {
@@ -161,6 +328,7 @@ function init() {
     //first attack
     $attack1.on('click', function() {
       var damage = 10;
+      iceMageShoot();
       damageHealthBar(damage, hBar2, bar2);
       checkBossAttack();
       checkTurns();
@@ -246,8 +414,10 @@ function init() {
       setTimeout(function(){
         damageHealthBar(dam, hBar, bar);
         healing(heal, hBar2, bar2); //new
+        // iceMageHurt();
+        walkBoss();
         $span1.html(hBar.data('value') + ' / 100');
-      }, 1000);
+      }, 2000);
     }
   }
 
@@ -261,15 +431,26 @@ function init() {
       subBar.css('width', barWidth + '%');
       $span2.html(newValue + (' / 100'));
     }, 500);
-    winCheck(newValue);
+    winCheck();
   }
 
-  function winCheck(newValue){
-    if (newValue <= 0) {
+  function winCheck(){
+    if (hBar2.data('value') <= 0) {
       setTimeout(function() {
         $result.show('easing');
         $result.html('You win!');
-        $restart.show('slow');
+        $restart.show();
+      }, 1000);
+      restart();
+    }
+    if (hBar.data('value') <= 0) {
+      clearInterval(iceMageIdle);
+      iceMageDead();
+
+      setTimeout(function() {
+        $result.show('easing');
+        $result.html('You Lose!');
+        $restart.show();
       }, 1000);
       restart();
     }
