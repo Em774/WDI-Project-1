@@ -22,18 +22,24 @@
 $(init);
 
 function init() {
+  const $title        = $('.title');
   const $startButton  = $('#startButton');
+  const $instructions = $('.instructions');
+  const $go           = $('.go');
   const $character    = $('.character');
-  const $character1   = $('#character1');
   const $character2   = $('#character2');
   const $displayChar1 = $('#displayChar1');
   const $displayChar2 = $('#displayChar2');
   const $displayBoss  = $('#displayBoss');
   const $projectile   = $('.projectile');
+  const $projectile2  = $('.projectile2');
+  const $projectile3  = $('.projectile3');
   const $countDown    = $('.countDown');
   const $action       = $('.action');
   const $attack1      = $('#attack1');
   const $attack2      = $('#attack2');
+  const $refreshCD    = $('.refreshCountdown');
+  const $potionCD     = $('.potionCountdown');
   const $span1        = $('.span1');
   const $span2        = $('.span2');
   const $potion       = $('#potion');
@@ -54,22 +60,28 @@ function init() {
   let walkMonster;
   let attackMonster;
   let backMonster;
-  // let idleNinja;
+  let deadMonster;
   let iceMageIdle;
   let mageHurt;
   let mageShoot;
+  let mageSpell;
   let shootProjectile;
+  let shootProjectile2;
+  let shootProjectile3;
   let mageDead;
   let move            = 0;
   let move2           = 0;
   let move3           = 0;
+  let move4           = 0;
 
-
+  $instructions.hide();
   $character.hide();
   $displayChar1.hide();
   $displayChar2.hide();
   $displayBoss.hide();
   $projectile.hide();
+  $projectile2.hide();
+  $projectile3.hide();
   $countDown.hide();
   $action.hide();
   $span1.hide();
@@ -103,39 +115,33 @@ function init() {
     $potion.html('Potion');
   });
 
-
+  //start the game
   $startButton.one('click', function() {
     $startButton.fadeOut();
+    $title.fadeOut();
     startGame();
   });
 
   function startGame() {
     $character.show();
+    $instructions.show();
     choseCharacter();
   }
 
   function choseCharacter() {
-    $character1.on('click', function(){
-      $character.fadeOut('fast');
-      displayChar1();
 
+    $character2.on('mouseover', function(){
+      $go.html('Let\'s go!');
     });
+    $character2.on('mouseout', function(){
+      $go.html('');
+    });
+
     $character2.on('click', function(){
       $character.fadeOut('fast');
+      $instructions.fadeOut('fast');
       displayChar2();
     });
-  }
-
-  function displayChar1() {
-    $displayChar1.show();
-    $displayBoss.show();
-    $action.show();
-    $span1.show();
-    $span2.show();
-    hBar.show();
-    hBar2.show();
-    bar.show();
-    bar2.show();
   }
 
   function displayChar2() {
@@ -164,7 +170,7 @@ function init() {
 
     function handleTimer(){
       if(count === 0) {
-        $countDown.html('Fight!');
+        $countDown.html('FIGHT!');
         clearInterval(timer);
         setTimeout(function() {
           $countDown.hide();
@@ -178,6 +184,7 @@ function init() {
     }
   }
 
+//animation
   function idleBoss() {
     idleMonster = setInterval(function() {
       $displayBoss.css('background-image', 'url(images/iceMonster-idle.png)');
@@ -216,7 +223,7 @@ function init() {
       step = (step + 1) % 7;
       iceMageHurt();
 
-      if (move3 === 7){
+      if (move3 === 10){
         clearInterval(attackMonster);
         backBoss();
       }
@@ -242,6 +249,22 @@ function init() {
     }, 100);
   }
 
+  function deadBoss() {
+    clearInterval(idleMonster);
+    move3 = 0;
+
+    deadMonster = setInterval(function() {
+      move3 ++;
+      $displayBoss.css('background-image', 'url(images/iceMonsterDead.png)');
+      $displayBoss.css('background-position', step * 678);
+      step = (step + 1) % 5;
+
+      if (move3 === 1){
+        clearInterval(backMonster);
+        $displayBoss.css('background-image', 'url(images/iceMonsterDead.png)');
+      }
+    }, 200);
+  }
 
 
   function iceMageIdlee() {
@@ -298,12 +321,69 @@ function init() {
       step = (step + 1) % 3;
       x = (x + 40) % 700;
 
-      if(move2 === 19) {
+      if(move2 === 18) {
         clearInterval(shootProjectile);
         $projectile.hide();
         iceMageIdlee();
       }
     }, 50);
+  }
+
+  function projectile2() {
+    clearInterval(iceMageIdle);
+    $projectile2.show();
+    x = 0;
+    move3 = 0;
+    shootProjectile2 = setInterval(function() {
+      move3 ++;
+      $projectile2.css('left', x);
+      $projectile2.css('background-position', step * 152);
+      step = (step + 1) % 3;
+      x = (x + 40) % 700;
+
+      if(move3 === 18) {
+        clearInterval(shootProjectile2);
+        $projectile2.hide();
+      }
+    }, 50);
+  }
+
+  function projectile3() {
+    clearInterval(iceMageIdle);
+    $projectile3.show();
+    x = 0;
+    move4 = 0;
+    shootProjectile3 = setInterval(function() {
+      move4 ++;
+      $projectile3.css('left', x);
+      $projectile3.css('background-position', step * 152);
+      step = (step + 1) % 3;
+      x = (x + 40) % 700;
+
+      if(move4 === 18) {
+        clearInterval(shootProjectile3);
+        $projectile3.hide();
+      }
+    }, 50);
+  }
+
+  function iceMageSpell() {
+    clearInterval(iceMageIdle);
+    move = 0;
+
+    mageSpell = setInterval(function() {
+      move ++;
+      $displayChar2.css('background-image', 'url(images/iceMageShoot.png)');
+      $displayChar2.css('background-position', step * 300);
+      step = (step + 1) % 4;
+
+      if(move === 2){
+        clearInterval(mageSpell);
+        projectile();
+        projectile2();
+        projectile3();
+      }
+    }, 200);
   }
 
   function iceMageDead() {
@@ -322,9 +402,9 @@ function init() {
       }
     }, 1000);
   }
+  //end of animation
 
   function actionButton() {
-
     //first attack
     $attack1.on('click', function() {
       var damage = 10;
@@ -339,6 +419,7 @@ function init() {
 
     function reUse(){
       var damage = 50;
+      iceMageSpell();
       damageHealthBar(damage, hBar2, bar2);
       checkBossAttack();
       $attack2.addClass('disabled');
@@ -346,23 +427,25 @@ function init() {
     }
 
     function checkTurns() {
-      console.log('checkTurns');
       if ($attack2.hasClass('disabled')) {
-        console.log('second button is disabled');
         refresh --;
+        $refreshCD.html(refresh);
       }
       if (refresh === 0){
         $attack2.removeClass('disabled');
         $attack2.one('click', reUse);
+        $refreshCD.html('');
         refresh = 4;
       }
       if ($potion.hasClass('disabled')) {
         healRefresh --;
         console.log(healRefresh);
+        $potionCD.html(healRefresh);
       }
       if (healRefresh === 0) {
         $potion.removeClass('disabled');
         $potion.one('click', potion);
+        $potionCD.html('');
         healRefresh = 4;
       }
     }
@@ -378,7 +461,6 @@ function init() {
       $potion.addClass('disabled');
       checkTurns();
     }
-
   }
 
   function checkBossAttack() {
@@ -413,8 +495,7 @@ function init() {
 
       setTimeout(function(){
         damageHealthBar(dam, hBar, bar);
-        healing(heal, hBar2, bar2); //new
-        // iceMageHurt();
+        healing(heal, hBar2, bar2);
         walkBoss();
         $span1.html(hBar.data('value') + ' / 100');
       }, 2000);
@@ -429,19 +510,21 @@ function init() {
     healthbar.data('value', newValue);
     setTimeout(function(){
       subBar.css('width', barWidth + '%');
-      $span2.html(newValue + (' / 100'));
-    }, 500);
+      $span2.html(hBar2.data('value') + (' / 100'));
+    }, 1000);
     winCheck();
   }
 
   function winCheck(){
     if (hBar2.data('value') <= 0) {
       setTimeout(function() {
+        deadBoss();
         $result.show('easing');
         $result.html('You win!');
         $restart.show();
       }, 1000);
       restart();
+      checkBossAttack.stop();
     }
     if (hBar.data('value') <= 0) {
       clearInterval(iceMageIdle);
@@ -462,7 +545,6 @@ function init() {
     console.log(value, newValue, heal);
     var barWidth = newValue;
     hBar2.data('value', newValue);
-    // console.log(newValue);
     setTimeout(function(){
       bar2.css('width', barWidth + '%');
     }, 1000);
@@ -472,6 +554,5 @@ function init() {
     $restart.on('click', function() {
       location.reload();
     });
-
   }
 }

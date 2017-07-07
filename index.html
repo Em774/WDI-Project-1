@@ -12,16 +12,29 @@
   </head>
   <body>
 
-    <div id="startButton"></div>
+    <div class="title">Ice Fight</div>
+    <div id="startButton">PLAY</div>
 
-    <div id="character1" class="character">Adventure Girl</div>
+    <div class="instructions">
+    How to Play <br>
+    This is a fighting game where you have to beat the boss with your spells.<br>
+    Every three turns, the ennemy will hit you with a random attack.<br>
+    You can use your strongest spell and potion every three turns.<br>
+    Enjoy the game!<br>
+    Click on the character when you are ready.</div>
 
-    <div id="character2" class="character">Ice Mage</div>
+
+    <!-- <div id="character1" class="character">Adventure Girl</div> -->
+
+    <div class="go"></div>
+    <div id="character2" class="character"></div>
 
     <div id="displayChar1"></div>
     <div id="displayChar2"></div>
     <div id="displayBoss"></div>
     <div class="projectile"></div>
+    <div class="projectile2"></div>
+    <div class="projectile3"></div>
 
     <div class="countDown"></div>
 
@@ -30,6 +43,8 @@
       <li id="attack2" class="action">Spell</li>
       <li id="potion" class="action">Potion</li>
     </ul>
+    <p class="refreshCountdown"></p>
+    <p class="potionCountdown"></p>
 
     <p class="span1"></p>
     <div class="healthbar" data-total="100" data-value="100" >
