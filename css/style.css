@@ -48,7 +48,7 @@ body {
   height: 60px;
   width: 210px;
   text-align: center;
-  color: white;
+  color: #fff;
   font-size: 58px;
   font-family: snowstorm;
   cursor: pointer;
@@ -102,6 +102,20 @@ body {
   color: #fff;
   font-size: 30px;
   font-family: snowstorm-light;
+}
+
+.player1, .ennemy {
+  position: absolute;
+  font-family: snowstorm-light;
+  font-size: 21px;
+  color: #fff;
+  margin-top: 113px;
+  margin-left: 85px;
+  color: #D1F5FD;
+}
+
+.ennemy {
+  margin-left: 1060px;
 }
 
 #displayChar2 {
@@ -159,7 +173,7 @@ body {
   text-align: center;
   padding-top: 80px;
   font-size: 60px;
-  color: white;
+  color: #fff;
   font-family: snowstorm;
 }
 
@@ -277,7 +291,7 @@ ul {
   margin-top: 200px;
   margin-left: 434px;
   text-align: center;
-  color: white;
+  color: #fff;
   font-size: 78px;
   font-family: snowstorm-light;
 

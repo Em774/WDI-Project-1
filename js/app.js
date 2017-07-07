@@ -43,6 +43,8 @@ function init() {
   const $span1        = $('.span1');
   const $span2        = $('.span2');
   const $potion       = $('#potion');
+  const $player1      = $('.player1');
+  const $ennemy       = $('.ennemy');
   const hBar          = $('.healthbar');
   const hBar2         = $('.healthbar2');
   const bar           = $('.bar');
@@ -86,6 +88,8 @@ function init() {
   $refreshCD.hide();
   $potionCD.hide();
   $action.hide();
+  $player1.hide();
+  $ennemy.hide();
   $span1.hide();
   $span2.hide();
   hBar.hide();
@@ -156,6 +160,8 @@ function init() {
     $span1.html('100 / 100');
     $span2.show();
     $span2.html('100 / 100');
+    $player1.show();
+    $ennemy.show();
     hBar.show();
     hBar2.show();
     bar.show();
