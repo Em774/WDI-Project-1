@@ -271,6 +271,7 @@ function init() {
 
       if (move3 === 1){
         clearInterval(backMonster);
+        deadBoss.stop();
         $displayBoss.css('background-image', 'url(images/iceMonsterDead.png)');
       }
     }, 200);
