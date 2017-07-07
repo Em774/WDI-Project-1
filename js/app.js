@@ -83,6 +83,8 @@ function init() {
   $projectile2.hide();
   $projectile3.hide();
   $countDown.hide();
+  $refreshCD.hide();
+  $potionCD.hide();
   $action.hide();
   $span1.hide();
   $span2.hide();
@@ -147,6 +149,8 @@ function init() {
   function displayChar2() {
     $displayChar2.show();
     $displayBoss.show();
+    $refreshCD.show();
+    $potionCD.show();
     $action.show();
     $span1.show();
     $span1.html('100 / 100');
@@ -467,6 +471,7 @@ function init() {
     if (counter === 0) {
       bossAttack();
       counter = 2;
+
     } else {
       counter--;
     }
@@ -524,12 +529,10 @@ function init() {
         $restart.show();
       }, 1000);
       restart();
-      checkBossAttack.stop();
     }
     if (hBar.data('value') <= 0) {
       clearInterval(iceMageIdle);
       iceMageDead();
-
       setTimeout(function() {
         $result.show('easing');
         $result.html('You Lose!');
