@@ -60,7 +60,9 @@ body {
 }
 
 .instructions {
-  margin: 0 auto;
+  position: absolute;
+  margin-left: 380px;
+  margin-top: 10px;
   color: #fff;
   font-size: 28px;
   width: 500px;
@@ -90,6 +92,7 @@ body {
 
 #character2 {
   margin-left: 560px;
+  margin-top: 400px;
   background-image: url('../images/iceMageIdle.png');
   transform: scaleX(-1);
 }
@@ -97,7 +100,7 @@ body {
 .go {
   position: absolute;
   margin-left: 582px;
-  margin-top: 62px;
+  margin-top: 400px;
   width: 200px;
   color: #fff;
   font-size: 30px;
@@ -321,4 +324,11 @@ color: #f44336;
 }
 .disabled:hover {
   box-shadow:0 0 25px 8px #E32F2F;
+}
+
+.emilie {
+  position: absolute;
+  color: #fff;
+  margin-top: 630px;
+  margin-left: 920px;
 }
